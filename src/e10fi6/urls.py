@@ -7,8 +7,12 @@ from utilisateur import views as user_views
 
 urlpatterns = [
     path("", include('page.urls')),
+    path("journal/", include("journal.urls")),
     path('admin/', admin.site.urls),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 url_users = [
     path('login/', user_views.LoginView.as_view(template_name="utilisateur/login.html"), name="login"),
@@ -39,5 +43,4 @@ url_users = [
 
 urlpatterns += url_users
 
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

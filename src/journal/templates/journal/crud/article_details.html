@@ -1,0 +1,41 @@
+{% extends 'base_public.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block titre_page %}{{ object }}{% endblock %}
+{% block contenu %}
+<section class="py-10">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-lg-10 col-xl-8 bg-white py-5">
+                <div class="single-post">
+                    <h1>{{ object.titre }}</h1>
+                    <div class="d-flex align-items-center justify-content-between mb-5">
+                        <div class="single-post-meta mr-4 float-left">
+                            <img class="single-post-meta-img" src="{{ object.created_by.profile.image.url }}"/>
+                            <div class="single-post-meta-details">
+                                <div class="single-post-meta-details-name">{{ object.created_by }}</div>
+                                <div class="single-post-meta-details-date">{{ object.created }}</div>
+                            </div>
+                        </div>
+                        {% if user.is_authenticated %}
+                        <div class="single-post-meta-links align-items-center">
+                            <a href="{% url 'journal:article-edition' slug=object.slug %}">Modifier</a>
+                            <a href="{% url 'journal:nouvel-article' %}">Ajouter</a>
+                            <a href="{% url 'journal:article-delete' slug=object.slug %}">Effacer</a>
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% if not "media/journal/default.png" in article.image.url %}
+                    <div class="text-center"><img class="img-fluid mb-2" src="{{ article.image.url }}"/></div>
+                    {% endif %}
+                    <div class="single-post-text my-5">
+                        {{ object.contenu|safe }}
+                        <hr class="my-5" />
+                        <div class="text-center"><a class="btn btn-primary-soft" href="{% url 'journal:index' %}">Retour aux autres articles</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

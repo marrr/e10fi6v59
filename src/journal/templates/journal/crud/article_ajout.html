@@ -1,0 +1,40 @@
+{% extends 'base_public.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block titre_page %}Ajouter un article{% endblock %}
+{% block contenu %}
+<section>
+  <div class="container py-10">
+    <div class="row pt-2">
+      <div class="col">
+        <div class="shadow card bg-light mb-3 mx-auto">
+          <div class="card-header text-center">
+            {% if '/edition' in request.path %}
+              Mise à jour par {{ user.username }}
+            {% else %}
+              Ajout par {{ user.username }}
+            {% endif %}
+          </div>
+          <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="card-body">
+              <p class="card-text">{{ form|crispy }}</p>
+            </div>
+            <div class="card-footer text-muted text-right">
+              <button type="submit"class="btn btn-success">
+                {% if '/edition' in request.path %}
+                  Mettre à jour
+                {% else %}
+                  Créer
+                {% endif %}
+              </button>
+              <button onclick="window.history.back();" class="btn btn-secondary">Annuler</button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>  
+</section>
+{% endblock %}

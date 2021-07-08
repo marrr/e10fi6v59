@@ -1,0 +1,150 @@
+{% extends 'base_public.html' %}
+
+{% block titre_page %}Le journal{% endblock %}
+{% block entete %}
+<header class="page-header page-header-dark bg-gradient-primary-to-secondary">
+  <div class="page-header-content">
+      <div class="container text-center">
+          <div class="row justify-content-center">
+              <div class="col-lg-8">
+                  <h1 class="page-header-title mb-3">AEC Data Science</h1>
+                  <p class="page-header-text">Suivi du développement de e10fi6 et sujets y relatifs</p>
+              </div>
+          </div>
+      </div>
+
+  </div>
+  <div class="svg-border-waves text-dark">
+    <!-- Wave SVG Border-->
+    <svg class="wave" style="pointer-events: none" fill="currentColor" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1920 75">
+        <defs>
+            <style>
+                .a {
+                    fill: none;
+                }
+                .b {
+                    clip-path: url(#a);
+                }
+                .d {
+                    opacity: 0.5;
+                    isolation: isolate;
+                }
+            </style>
+        </defs>
+        <clippath id="a"><rect class="a" width="1920" height="75"></rect></clippath>
+        <g class="b"><path class="c" d="M1963,327H-105V65A2647.49,2647.49,0,0,1,431,19c217.7,3.5,239.6,30.8,470,36,297.3,6.7,367.5-36.2,642-28a2511.41,2511.41,0,0,1,420,48"></path></g>
+        <g class="b"><path class="d" d="M-127,404H1963V44c-140.1-28-343.3-46.7-566,22-75.5,23.3-118.5,45.9-162,64-48.6,20.2-404.7,128-784,0C355.2,97.7,341.6,78.3,235,50,86.6,10.6-41.8,6.9-127,10"></path></g>
+        <g class="b"><path class="d" d="M1979,462-155,446V106C251.8,20.2,576.6,15.9,805,30c167.4,10.3,322.3,32.9,680,56,207,13.4,378,20.3,494,24"></path></g>
+        <g class="b"><path class="d" d="M1998,484H-243V100c445.8,26.8,794.2-4.1,1035-39,141-20.4,231.1-40.1,378-45,349.6-11.6,636.7,73.8,828,150"></path></g>
+    </svg>
+  </div>
+</header>
+
+{% endblock %}
+{% block contenu %}
+{% if user.is_authenticated %}
+<section class="bg-dark py-5 text-white">
+    <div class="container">
+      <div class="row pb-3">
+        <div class="col text-right">
+          <a class="btn btn-sm btn-primary-soft text-primary font-weight-500" href="{% url 'journal:nouvel-article' %}"><i class="fas fa-plus"></i> Ajouter un article</a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <h1 class="text-red pb-3">Brouillons</h1>
+        </div>
+      </div>
+      <div class="row">
+          {% for article in brouillons %}
+          <div class="col-lg-10">
+              <div class="post-archive-tag">{% for tag in article.tags.all %}{{ tag }} {% endfor %}</div>
+              <a class="post-archive-item" href="{% url 'journal:article-details' slug=article.slug %}"
+                  ><h5 class="text-blue">{{ article.titre }}</h5>
+                  <p>{{ article.contenu|safe|truncatewords_html:25 }}</p></a
+              >
+              <div class="post-archive-meta">
+                  <img class="post-archive-meta-img" src="{{ article.created_by.profile.image.url }}" />
+                  <div class="post-archive-meta-details text-yellow">
+                      <div class="post-archive-meta-details-name">{{ article.created_by}}</div>
+                      <div class="post-archive-meta-details-date">{{ article.created }}</div>
+                  </div>
+              </div>
+              <hr class="my-5" />
+          </div>
+          {% endfor %}
+      </div>
+      <div class="row">
+        <div class="col">
+          <h1 class="text-red pb-3">Déjà publiés</h1>
+        </div>
+      </div>
+      <div class="row">
+          {% for article in publications %}
+          <div class="col-lg-10">
+              <div class="post-archive-tag">{% for tag in article.tags.all %}{{ tag }} {% endfor %}</div>
+              <a class="post-archive-item" href="{% url 'journal:article-details' slug=article.slug %}"
+                  ><h5>{{ article.titre }}</h5>
+                  <p>{{ article.contenu|safe|truncatewords_html:25 }}...</p></a
+              >
+              <div class="post-archive-meta">
+                  <img class="post-archive-meta-img" src="{{ article.created_by.profile.image.url }}" />
+                  <div class="post-archive-meta-details">
+                      <div class="post-archive-meta-details-name">{{ article.created_by}}</div>
+                      <div class="post-archive-meta-details-date">{{ article.created }}</div>
+                  </div>
+              </div>
+              <hr class="my-5" />
+          </div>
+          {% endfor %}
+      </div>
+    </div>
+</section>
+{% else %}
+<section class="bg-dark py-5">
+    <div class="container">
+      <div class="row">
+          {% for article in publications %}
+          <div class="col-md-6 col-xl-4 mb-5">
+              <a class="card post-preview lift" href="{% url 'journal:article-details' slug=article.slug %}"
+                  >
+                  {% if article.image.url %}
+                  {% if not "media/journal/default.png" in article.image.url %}
+                  <img class="card-img-top" src="{{ article.image.url }}" alt="..." />
+                  {% endif %}
+                  {% endif %}
+                  <div class="card-body">
+                      <h5 class="card-title">{{ article.titre }}</h5>
+                      <p class="card-text">{{ article.contenu|safe|truncatewords_html:25 }}</p>
+                  </div>
+                  <div class="card-footer">
+                    <div class="row pb-2">
+                      <div class="col">
+                        {% if article.published %}
+                          <span class="badge badge-success">publié</span>
+                        {% else %}
+                          <span class="badge badge-warning">brouillon</span>
+                        {% endif %}
+                      </div>
+                    </div>
+                      <div class="post-preview-meta float-left">
+                          <img class="post-preview-meta-img" src="{{ article.created_by.profile.image.url }}" />
+                          <div class="post-preview-meta-details">
+                              <div class="post-preview-meta-details-name">{{ article.created_by }}</div>
+                              <div class="post-preview-meta-details-date">{{ article.created|date }}</div>
+                          </div>
+                      </div>
+                      <div class=float-right>
+                          <div>
+                              {% for tag in article.tags.all %}<span class="badge badge-secondary mr-1">{{ tag }}</span>{% endfor %}
+                          </div>
+                      </div>
+                  </div>
+              </a>
+          </div>
+          {% endfor %}
+      </div>
+    </div>
+</section>
+{% endif %}
+{% endblock %}
