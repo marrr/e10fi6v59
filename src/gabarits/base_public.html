@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block body_class %}
+bg-dark
+{% endblock %}
+
+{% block style_page %}
+{% include 'style_public.html' %}
+{% endblock %}
+
+{% block body_contenu %}
+<div id="layoutDefault">
+	<div id="layoutDefault_content">
+		<main>
+			<!-- Navbar-->
+			{% include 'navbar_public.html' %}
+			<!-- Page Header-->
+			{% block entete %}{% endblock %}		   
+			<!-- Contenu-->
+			{% block contenu %}{% endblock %}
+		</main>
+	</div>
+	{% include 'footer_public.html' %}
+</div>
+{% endblock %}
+
+{% block js_page %}
+{% include 'js_public.html' %}
+{% endblock %}

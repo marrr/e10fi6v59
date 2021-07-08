@@ -1,0 +1,22 @@
+{% extends 'base_public.html' %}
+
+{% block titre_page %}Page d'accueil{% endblock %}
+
+{% block entete %}
+{% load static %}
+<header class="page-header page-header-light bg-dark text-white" >
+  <div class="page-header-content">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-5">
+            <h1 class="page-header-title text-white">AEC Data Science</h1>
+            <p class="page-header-text mb-5 text-white">Modélisation et gestion des données liées aux industries de l'Architecture, de l'Ingénierie et de la Construction.</p>
+        </div>
+        <div class="col-lg-7 d-none d-md-block" data-aos="fade-left"><img class="img-fluid pl-xl-5" src="{% static 'img/data_processing.png' %}" /></div>
+      </div>
+    </div>
+  </div>
+</header>
+{% endblock %}	
+
+{% block contenu %}{% endblock %}
