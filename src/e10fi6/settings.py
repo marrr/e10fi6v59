@@ -23,6 +23,7 @@ ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
 # Application definition
 
 INSTALLED_APPS = [
+    'utilisateur',
     'page',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -154,8 +155,9 @@ TINYMCE_DEFAULT_CONFIG = {
     "fullscreen  preview save print | insertfile image media pageembed template link anchor codesample | "
     "a11ycheck ltr rtl | showcomments addcomment code",
     "custom_undo_redo_levels": 10,
-    "language": "fr",  # To force a specific language instead of the Django current language.
+    "language": "fr",
 }
+
 INTERNAL_IPS = [
     'localhost',
     '127.0.0.1',
