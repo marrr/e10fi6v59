@@ -5,11 +5,12 @@
 
 {% endblock %}
 {% block contenu %}
+{% load static %}
 <div class="container-fluid py-10 bg-dark">
     <div class="row justify-content-center">
         <div class="col-lg-5">
             <a href="{% url 'page:accueil' %}">
-                <img class="img-fluid mx-auto d-block" src="/media/img/End of workday-rafiki.png"/>
+                <img class="img-fluid mx-auto d-block" src="{% static 'img/End of workday-rafiki.png' %}"/>
             </a>
         </div>
     </div>

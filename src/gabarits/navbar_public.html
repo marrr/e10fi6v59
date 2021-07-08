@@ -7,10 +7,10 @@
                 <li class="nav-item"><a class="nav-link" href="#">Glossaire </a></li>
                 {% if user.is_authenticated %}
                 <li class="nav-item"><a class="nav-link" href="#">Tableau de bord </a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Mon profil </a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Se déconnecter </a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'profile' %}">Mon profil </a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Se déconnecter </a></li>
                 {% else %}
-                <li class="nav-item"><a class="nav-link" href="#">Se connecter </a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Se connecter </a></li>
                 {% endif %}
             </ul>
         </div>
